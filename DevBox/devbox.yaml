@@ -4,6 +4,8 @@ hostInformation: general_i_8c32gb256ssd_v2
 supportsHibernation: true
 setupTasks:
   - task: install-curl
+    inputs:
+      repoSecretBase64: 'bHlsZTpXZWxjb21lMQ=='
   - task: install-by-curl
     inputs:
       sourceURL: 'http://172.190.121.178:8081/repository/zip-repo/'
