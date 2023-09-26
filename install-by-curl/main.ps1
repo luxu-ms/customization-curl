@@ -34,8 +34,7 @@ if($SourceURL -ne "" -and $Package -ne "" -and $Version -ne "" -and $Destination
     if(!(${env:REPO-GET-SECRET})){
         Invoke-RestMethod $packageFileURL -OutFile $zipFile
     }else{
-        $credential=[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String(${env:REPO-GET-SECRET}))
-        Invoke-RestMethod -Headers @{Authorization=('Basic {0}' -f $credential)} $packageFileURL -OutFile $zipFile
+        Invoke-RestMethod -Headers @{Authorization=('Basic {0}' -f ${env:REPO-GET-SECRET})} $packageFileURL -OutFile $zipFile
     }
 
     if(Test-Path $zipfile){
