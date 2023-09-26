@@ -29,15 +29,14 @@ if($SourceURL -ne "" -and $Package -ne "" -and $Version -ne "" -and $Destination
         New-Item $DestinationDirectory -ItemType Directory
     }
 
+    $zipFile = Join-Path $DestinationDirectory "$Package-$Version.zip"
+
     if(!(${env:REPO-GET-SECRET})){
-        curl -O --output-dir $DestinationDirectory $packageFileURL
+        Invoke-RestMethod $packageFileURL -OutFile $zipFile
     }else{
         $credential=[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String(${env:REPO-GET-SECRET}))
-        curl -O -u $credential --output-dir $DestinationDirectory $packageFileURL
+        Invoke-RestMethod -Headers @{Authorization=('Basic {0}' -f $credential)} $packageFileURL -OutFile $zipFile
     }
-    
-
-    $zipFile = Join-Path $DestinationDirectory "$Package-$Version.zip"
 
     if(Test-Path $zipfile){
         $packageFolder = "$DestinationDirectory/$Package-$Version" 

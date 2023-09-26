@@ -3,5 +3,5 @@ param (
     [string]$RepoSecretBase64
 )
 
-winget install curl
+#winget install curl
 [System.Environment]::SetEnvironmentVariable('REPO-GET-SECRET',"$RepoSecretBase64", 'Machine')
